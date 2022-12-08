@@ -3,7 +3,9 @@ package com.example.zeldadex.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeldadex.R
 import com.example.zeldadex.model.Category
@@ -28,7 +30,11 @@ class CategoryAdapter(private val dataSet: List<Category>) : RecyclerView.Adapte
     inner class CategoryHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(current: Category) {
             val txtCat = itemView.findViewById<TextView>(R.id.txt_vertical_list)
+            val rv = itemView.findViewById<RecyclerView>(R.id.rv_horizontal)
+
             txtCat.text = current.name
+            rv.adapter = ContentAdapter(current.contentList)
+            rv.layoutManager = LinearLayoutManager(itemView.context, RecyclerView.HORIZONTAL, false)
         }
     }
 }

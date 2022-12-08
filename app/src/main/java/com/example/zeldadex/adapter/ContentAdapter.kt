@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zeldadex.R
 import com.example.zeldadex.model.Content
 
-class ContentAdapter(val dataSet: List<Content>) : RecyclerView.Adapter<ContentAdapter.ContentHolder>() {
+class ContentAdapter(private val dataSet: List<Content>) : RecyclerView.Adapter<ContentAdapter.ContentHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentHolder {
         val inflater = LayoutInflater.from(parent.context)
