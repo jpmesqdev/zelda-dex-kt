@@ -1,5 +1,6 @@
 package com.example.zeldadex.adapter
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeldadex.R
 import com.example.zeldadex.model.Category
+import com.example.zeldadex.util.BitmapTask
 
 class CategoryAdapter(private val dataSet: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 

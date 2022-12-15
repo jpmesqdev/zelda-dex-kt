@@ -5,6 +5,7 @@ import android.os.Looper
 import android.util.Log
 import com.example.zeldadex.model.Category
 import com.example.zeldadex.model.Content
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
@@ -19,7 +20,7 @@ class CategoryTask(private val callback: Callback) {
     private val executor: Executor = Executors.newSingleThreadExecutor()
 
     interface Callback {
-        fun onResult(test: List<Category>)
+        fun onResult(categories: List<Category>)
         fun onFailure(message: String)
         fun onPreExecute()
     }
@@ -78,8 +79,46 @@ class CategoryTask(private val callback: Callback) {
         val data = jsonRoot?.getJSONObject("data")
 
         data!!.keys().forEach {
+            var content: JSONArray
+            val contentList = mutableListOf<Content>()
+            if (it == "creatures") {
+                content = data.getJSONObject(it).getJSONArray("non_food")
+            } else {
+                content = data.getJSONArray(it)
+            }
+
+            for (i in 0 until content.length()) {
+                val jsonContent = content.getJSONObject(i)
+                val category = jsonContent.getString("category")
+//                val commonLoc = jsonContent.getJSONArray("common_locations")
+                val description = jsonContent.getString("description")
+                //val drops = jsonContent.getJSONArray("drops")
+                val id = jsonContent.getInt("id")
+                val image = jsonContent.getString("image")
+                val name = jsonContent.getString("name")
+
+                val commonLocList = mutableListOf<String>()
+                val dropsList = mutableListOf<String>()
+
+//                for (j in 0 until commonLoc.length()) {
+//                    commonLocList.add(commonLoc[j] as String)
+//                    if (commonLoc.length() > 1) {
+//                        commonLocList.add(commonLoc[j + 1] as String)
+//                    }
+//                }
+
+//                for (j in 0 until drops.length()) {
+//                    dropsList.add(drops[j] as String)
+//                    if (drops.length() > 1) {
+//                        dropsList.add(drops[j + 1] as String)
+//                    }
+//                }
+
+                contentList.add(Content(category, commonLocList, description, dropsList, id, image, name))
+            }
+
            categories.add(
-               Category(it, mutableListOf<Content>())
+               Category(it, contentList)
            )
         }
 
