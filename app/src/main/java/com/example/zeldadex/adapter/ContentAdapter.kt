@@ -1,16 +1,21 @@
 package com.example.zeldadex.adapter
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeldadex.R
 import com.example.zeldadex.model.Content
 import com.example.zeldadex.util.BitmapTask
 
-class ContentAdapter(private val dataSet: List<Content>) : RecyclerView.Adapter<ContentAdapter.ContentHolder>() {
+class ContentAdapter(private val context: Context,
+                     private val dataSet: List<Content>,
+                     private val onItemClickListener: ((Int) -> Unit)? = null
+                     ) : RecyclerView.Adapter<ContentAdapter.ContentHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,6 +41,10 @@ class ContentAdapter(private val dataSet: List<Content>) : RecyclerView.Adapter<
                 }
 
             }).exec(current.image)
+            imgView.setOnClickListener {
+                onItemClickListener?.invoke(current.id)
+            }
         }
+
     }
 }

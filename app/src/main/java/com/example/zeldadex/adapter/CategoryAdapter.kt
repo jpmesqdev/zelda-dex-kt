@@ -1,9 +1,11 @@
 package com.example.zeldadex.adapter
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +14,10 @@ import com.example.zeldadex.R
 import com.example.zeldadex.model.Category
 import com.example.zeldadex.util.BitmapTask
 
-class CategoryAdapter(private val dataSet: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+class CategoryAdapter(private val context: Context,
+                      private val dataSet: List<Category>,
+                      private val onItemClickListener: ((Int) -> Unit)
+) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -35,7 +40,7 @@ class CategoryAdapter(private val dataSet: List<Category>) : RecyclerView.Adapte
             val rv = itemView.findViewById<RecyclerView>(R.id.rv_horizontal)
 
             txtCat.text = current.name
-            rv.adapter = ContentAdapter(current.contentList)
+            rv.adapter = ContentAdapter(context, current.contentList, onItemClickListener)
             rv.layoutManager = LinearLayoutManager(itemView.context, RecyclerView.HORIZONTAL, false)
         }
     }

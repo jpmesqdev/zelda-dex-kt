@@ -1,5 +1,6 @@
 package com.example.zeldadex
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,11 @@ class MainActivity : AppCompatActivity(), CategoryTask.Callback {
 
     private lateinit var rv: RecyclerView
     private val categories = mutableListOf<Category>()
-    private val adapter: CategoryAdapter = CategoryAdapter(categories)
+    private val adapter: CategoryAdapter = CategoryAdapter(this, categories) { id ->
+        val intent = Intent(this@MainActivity, ContentActivity::class.java)
+        intent.putExtra("id", ""+id)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
